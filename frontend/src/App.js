@@ -9,9 +9,6 @@ class App extends Component {
     return (
       <div>
         <TopAppBar />
-        <Container>
-          <Button color="primary">button</Button>
-        </Container>
       </div>
     );
   }
