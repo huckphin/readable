@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Appbar from 'muicss/lib/react/appbar';
+import PlusCircle from 'react-icons/lib/fa/plus-circle';
 
 class TopAppBar extends Component {
   render() {
@@ -16,6 +17,9 @@ class TopAppBar extends Component {
             <tbody>
               <tr style={style}>
                 <td className="mui--appbar-height">Readable</td>
+                <td>
+                  <PlusCircle size={30} />
+                </td>
               </tr>
             </tbody>
           </table>
