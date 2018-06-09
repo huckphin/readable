@@ -1,0 +1,68 @@
+/**
+  * Toggle Side drawer
+  */
+#sidedrawer.active {
+  transform: translate(200px);
+}
+
+/**
+   * Header CSS
+   */
+.sidedrawer-toggle {
+  color: #fff;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 20px;
+  margin-right: 10px;
+}
+
+.sidedrawer-toggle:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+/**
+   * Footer CSS
+   */
+#footer {
+  background-color: #0288d1;
+  color: #fff;
+}
+
+#footer a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/**
+  * Side drawer CSS
+  */
+#sidedrawer-brand {
+  padding-left: 20px;
+}
+
+#sidedrawer ul {
+  list-style: none;
+}
+
+#sidedrawer > ul {
+  padding-left: 0px;
+}
+
+#sidedrawer > ul > li:first-child {
+  padding-top: 15px;
+}
+
+#sidedrawer strong {
+  display: block;
+  padding: 15px 22px;
+  cursor: pointer;
+}
+
+#sidedrawer strong:hover {
+  background-color: #e0e0e0;
+}
+
+#sidedrawer strong + ul > li {
+  padding: 6px 0px;
+}

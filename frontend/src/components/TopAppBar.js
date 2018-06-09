@@ -25,25 +25,29 @@ class TopAppBar extends Component {
     };
 
     return (
-      <div id="top-app-bar">
-        <Appbar>
-          <table width="100%">
-            <tbody>
-              <tr style={leftMiddleStyle}>
-                <td className="mui--appbar-height" style={leftMiddleStyle}>
-                  Readable
-                </td>
-                <td style={iconRightStyle}>
-                  <Columns size={30} />
-                </td>
-                <td style={iconLeftStyle}>
-                  <PlusCircle size={30} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </Appbar>
-      </div>
+      <header id="header">
+        <div class="mui-appbar mui--appbar-line-height">
+          <div class="mui-container-fluid">
+            <Appbar>
+              <table width="100%">
+                <tbody>
+                  <tr style={leftMiddleStyle}>
+                    <td className="mui--appbar-height" style={leftMiddleStyle}>
+                      Readable
+                    </td>
+                    <td style={iconRightStyle}>
+                      <Columns size={30} />
+                    </td>
+                    <td style={iconLeftStyle}>
+                      <PlusCircle size={30} />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </Appbar>
+          </div>
+        </div>
+      </header>
     );
   }
 }

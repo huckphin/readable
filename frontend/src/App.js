@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
-import Button from 'muicss/lib/react/button';
-import Container from 'muicss/lib/react/container';
+import './styles/SideDrawer.css';
 import TopAppBar from './components/TopAppBar';
+import SideDrawer from './components/SideDrawer';
+import ContentWrapper from './components/ContentWrapper';
+import Footer from './components/Footer';
 
 class App extends Component {
   render() {
     return (
       <div>
+        <SideDrawer />
         <TopAppBar />
+        <ContentWrapper />
+        <Footer />
       </div>
     );
   }
