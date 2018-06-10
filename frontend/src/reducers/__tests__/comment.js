@@ -86,8 +86,10 @@ describe('commentReducer', () => {
     const actual = comment(stateBefore(), action);
     expect(actual).toEqual(expected);
   });
+});
 
-  it('should delete a comment', () => {
+describe('should delete comments', () => {
+  it('should delete a valid comment', () => {
     const action = {
       type: 'DELETE_COMMENT',
       id: '8tu4bsun805n8un48ve89'
@@ -102,6 +104,28 @@ describe('commentReducer', () => {
         author: 'thingone',
         voteScore: -5,
         deleted: true,
+        parentDeleted: false
+      }
+    };
+    const actual = comment(stateBefore(), action);
+    expect(actual).toEqual(expected);
+  });
+
+  it('should not modify state when given an invalid comment id', () => {
+    const action = {
+      type: 'DELETE_COMMENT',
+      id: 'invalid-id'
+    };
+
+    const expected = {
+      '8tu4bsun805n8un48ve89': {
+        id: '8tu4bsun805n8un48ve89',
+        parentId: '8xf0y6ziyjabvozdd253nd',
+        timestamp: 1469479767190,
+        body: 'Comments. Are. Cool.',
+        author: 'thingone',
+        voteScore: -5,
+        deleted: false,
         parentDeleted: false
       }
     };

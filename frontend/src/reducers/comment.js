@@ -1,4 +1,8 @@
-import { ADD_COMMENT, DELETE_COMMENT } from '../actions/commentAction';
+import {
+  ADD_COMMENT,
+  DELETE_COMMENT,
+  EDIT_COMMENT
+} from '../actions/commentAction';
 
 function comment(state = initialCommentState, action) {
   switch (action.type) {
@@ -9,13 +13,17 @@ function comment(state = initialCommentState, action) {
         [action.id]: action
       };
     case DELETE_COMMENT:
-      return {
-        ...state,
-        [action.id]: {
-          ...state[action.id],
-          deleted: true
-        }
-      };
+      if (action.id in state) {
+        return {
+          ...state,
+          [action.id]: {
+            ...state[action.id],
+            deleted: true
+          }
+        };
+      } else {
+        return state;
+      }
     default:
       return state;
   }
