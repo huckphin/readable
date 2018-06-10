@@ -26,8 +26,8 @@ class TopAppBar extends Component {
 
     return (
       <header id="header">
-        <div class="mui-appbar mui--appbar-line-height">
-          <div class="mui-container-fluid">
+        <div className="mui-appbar mui--appbar-line-height">
+          <div className="mui-container-fluid">
             <Appbar>
               <table width="100%">
                 <tbody>
