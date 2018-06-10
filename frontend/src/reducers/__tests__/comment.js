@@ -61,6 +61,7 @@ describe('commentReducer', () => {
     };
 
     const expected = {
+      ...stateBefore(),
       '894tuq4ut84ut8v4t8wun89g': {
         id: '894tuq4ut84ut8v4t8wun89g',
         parentId: '8xf0y6ziyjabvozdd253nd',
@@ -68,16 +69,6 @@ describe('commentReducer', () => {
         body: 'Hi there! I am a COMMENT.',
         author: 'thingtwo',
         voteScore: 6,
-        deleted: false,
-        parentDeleted: false
-      },
-      '8tu4bsun805n8un48ve89': {
-        id: '8tu4bsun805n8un48ve89',
-        parentId: '8xf0y6ziyjabvozdd253nd',
-        timestamp: 1469479767190,
-        body: 'Comments. Are. Cool.',
-        author: 'thingone',
-        voteScore: -5,
         deleted: false,
         parentDeleted: false
       }
@@ -95,18 +86,9 @@ describe('should delete comments', () => {
       id: '8tu4bsun805n8un48ve89'
     };
 
-    const expected = {
-      '8tu4bsun805n8un48ve89': {
-        id: '8tu4bsun805n8un48ve89',
-        parentId: '8xf0y6ziyjabvozdd253nd',
-        timestamp: 1469479767190,
-        body: 'Comments. Are. Cool.',
-        author: 'thingone',
-        voteScore: -5,
-        deleted: true,
-        parentDeleted: false
-      }
-    };
+    const expected = stateBefore();
+    expected['8tu4bsun805n8un48ve89']['deleted'] = true;
+
     const actual = comment(stateBefore(), action);
     expect(actual).toEqual(expected);
   });
@@ -117,20 +99,18 @@ describe('should delete comments', () => {
       id: 'invalid-id'
     };
 
-    const expected = {
-      '8tu4bsun805n8un48ve89': {
-        id: '8tu4bsun805n8un48ve89',
-        parentId: '8xf0y6ziyjabvozdd253nd',
-        timestamp: 1469479767190,
-        body: 'Comments. Are. Cool.',
-        author: 'thingone',
-        voteScore: -5,
-        deleted: false,
-        parentDeleted: false
-      }
-    };
     const actual = comment(stateBefore(), action);
-    expect(actual).toEqual(expected);
+    expect(actual).toEqual(stateBefore());
+  });
+
+  it('should return an empty state when given an empty state', () => {
+    const action = {
+      type: 'DELETE_COMMENT',
+      id: 'invalid-id'
+    };
+
+    const actual = comment({}, action);
+    expect(actual).toEqual({});
   });
 });
 
@@ -142,18 +122,8 @@ describe('should edit comments', () => {
       id: '8tu4bsun805n8un48ve89'
     };
 
-    const expected = {
-      '8tu4bsun805n8un48ve89': {
-        id: '8tu4bsun805n8un48ve89',
-        parentId: '8xf0y6ziyjabvozdd253nd',
-        timestamp: 1469479767190,
-        body: 'I can edit the comments.',
-        author: 'thingone',
-        voteScore: -5,
-        deleted: false,
-        parentDeleted: false
-      }
-    };
+    let expected = stateBefore();
+    expected['8tu4bsun805n8un48ve89']['body'] = 'I can edit the comments.';
 
     const actual = comment(stateBefore(), action);
     expect(actual).toEqual(expected);
@@ -166,20 +136,88 @@ describe('should edit comments', () => {
       id: 'invalid-id'
     };
 
-    const expected = {
-      '8tu4bsun805n8un48ve89': {
-        id: '8tu4bsun805n8un48ve89',
-        parentId: '8xf0y6ziyjabvozdd253nd',
-        timestamp: 1469479767190,
-        body: 'Comments. Are. Cool.',
-        author: 'thingone',
-        voteScore: -5,
-        deleted: false,
-        parentDeleted: false
-      }
+    const actual = comment(stateBefore(), action);
+    expect(actual).toEqual(stateBefore());
+  });
+
+  it('should return an empty state when operating on an empty state', () => {
+    const action = {
+      type: 'EDIT_COMMENT',
+      body: 'No real id - should not be saved.',
+      id: 'invalid-id'
     };
+
+    const actual = comment({}, action);
+    expect(actual).toEqual({});
+  });
+});
+
+describe('vote down a comment', () => {
+  it('should decrement a vote score', () => {
+    const action = {
+      type: 'VOTE_DOWN_COMMENT',
+      id: '8tu4bsun805n8un48ve89'
+    };
+
+    let expected = stateBefore();
+    expected['8tu4bsun805n8un48ve89']['voteScore'] -= 1;
 
     const actual = comment(stateBefore(), action);
     expect(actual).toEqual(expected);
+  });
+
+  it('should not modify state when given an invalid id', () => {
+    const action = {
+      type: 'VOTE_DOWN_COMMENT',
+      id: 'invalid-id'
+    };
+
+    const actual = comment(stateBefore(), action);
+    expect(actual).toEqual(stateBefore());
+  });
+
+  it('should return empty state when given invalid id', () => {
+    const action = {
+      type: 'VOTE_DOWN_COMMENT',
+      id: 'invalid-id'
+    };
+
+    const actual = comment({}, action);
+    expect(actual).toEqual({});
+  });
+});
+
+describe('vote up a comment', () => {
+  it('should vote up a valid comment', () => {
+    const action = {
+      type: 'VOTE_UP_COMMENT',
+      id: '8tu4bsun805n8un48ve89'
+    };
+
+    let expected = stateBefore();
+    expected['8tu4bsun805n8un48ve89']['voteScore'] += 1;
+
+    const actual = comment(stateBefore(), action);
+    expect(actual).toEqual(expected);
+  });
+
+  it('should not modify state when given an invalid id', () => {
+    const action = {
+      type: 'VOTE_UP_COMMENT',
+      id: 'invalid-id'
+    };
+
+    const actual = comment(stateBefore(), action);
+    expect(actual).toEqual(stateBefore());
+  });
+
+  it('should not modify state when given an empty state', () => {
+    const action = {
+      type: 'VOTE_UP_COMMENT',
+      id: 'no-such-id'
+    };
+
+    const actual = comment({}, action);
+    expect(actual).toEqual({});
   });
 });

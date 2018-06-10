@@ -1,7 +1,9 @@
 import {
   ADD_COMMENT,
   DELETE_COMMENT,
-  EDIT_COMMENT
+  EDIT_COMMENT,
+  VOTE_DOWN_COMMENT,
+  VOTE_UP_COMMENT
 } from '../actions/commentAction';
 
 function comment(state = initialCommentState, action) {
@@ -33,6 +35,34 @@ function comment(state = initialCommentState, action) {
             body: action.body
           }
         };
+      } else {
+        return state;
+      }
+    case VOTE_DOWN_COMMENT:
+      if (action.id in state) {
+        const newVoteScore = state[action.id]['voteScore'] - 1;
+        return {
+          ...state,
+          [action.id]: {
+            ...state[action.id],
+            voteScore: newVoteScore
+          }
+        };
+      } else {
+        return state;
+      }
+    case VOTE_UP_COMMENT:
+      if (action.id in state) {
+        const newVoteScore = state[action.id]['voteScore'] + 1;
+        return {
+          ...state,
+          [action.id]: {
+            ...state[action.id],
+            voteScore: newVoteScore
+          }
+        };
+      } else {
+        return state;
       }
     default:
       return state;

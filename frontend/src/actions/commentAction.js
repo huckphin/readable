@@ -27,11 +27,10 @@ export function addComment({
   };
 }
 
-export function deleteComment({ id, parentId }) {
+export function deleteComment({ id }) {
   return {
     type: DELETE_COMMENT,
-    id,
-    parentId
+    id
   };
 }
 
