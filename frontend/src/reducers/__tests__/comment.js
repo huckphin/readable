@@ -1,5 +1,6 @@
 import expect from 'expect';
 import comment from '../comment';
+import { addComment } from '../../actions/commentAction';
 
 function stateBefore() {
   return {
@@ -18,38 +19,18 @@ function stateBefore() {
 
 describe('commentReducer', () => {
   it('should add one comment from an empty state', () => {
+    const addComment = stateBefore()['8tu4bsun805n8un48ve89'];
     const action = {
       type: 'ADD_COMMENT',
-      id: '8tu4bsun805n8un48ve89',
-      parentId: '8xf0y6ziyjabvozdd253nd',
-      timestamp: 1469479767190,
-      body: 'Comments. Are. Cool.',
-      author: 'thingone',
-      voteScore: -5,
-      deleted: false,
-      parentDeleted: false
-    };
-
-    const expected = {
-      '8tu4bsun805n8un48ve89': {
-        id: '8tu4bsun805n8un48ve89',
-        parentId: '8xf0y6ziyjabvozdd253nd',
-        timestamp: 1469479767190,
-        body: 'Comments. Are. Cool.',
-        author: 'thingone',
-        voteScore: -5,
-        deleted: false,
-        parentDeleted: false
-      }
+      ...addComment
     };
 
     const actual = comment({}, action);
-    expect(actual).toEqual(expected);
+    expect(actual).toEqual(stateBefore());
   });
 
   it('should add a second comment', () => {
-    const action = {
-      type: 'ADD_COMMENT',
+    const addComment = {
       id: '894tuq4ut84ut8v4t8wun89g',
       parentId: '8xf0y6ziyjabvozdd253nd',
       timestamp: 1468166872634,
@@ -59,20 +40,13 @@ describe('commentReducer', () => {
       deleted: false,
       parentDeleted: false
     };
-
-    const expected = {
-      ...stateBefore(),
-      '894tuq4ut84ut8v4t8wun89g': {
-        id: '894tuq4ut84ut8v4t8wun89g',
-        parentId: '8xf0y6ziyjabvozdd253nd',
-        timestamp: 1468166872634,
-        body: 'Hi there! I am a COMMENT.',
-        author: 'thingtwo',
-        voteScore: 6,
-        deleted: false,
-        parentDeleted: false
-      }
+    const action = {
+      type: 'ADD_COMMENT',
+      ...addComment
     };
+
+    const expected = stateBefore();
+    expected[addComment['id']] = addComment;
 
     const actual = comment(stateBefore(), action);
     expect(actual).toEqual(expected);

@@ -1,4 +1,4 @@
-import { ADD_POST } from '../actions/postAction';
+import { ADD_POST, DELETE_POST } from '../actions/postAction';
 
 function post(state = initialPostState, action) {
   switch (action.type) {
@@ -8,6 +8,16 @@ function post(state = initialPostState, action) {
         ...state,
         [action.id]: action
       };
+    case DELETE_POST:
+      if (action.id in state) {
+        return {
+          ...state,
+          [action.id]: {
+            ...state[action.id],
+            deleted: true
+          }
+        };
+      }
     default:
       return state;
   }
