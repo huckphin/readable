@@ -133,3 +133,53 @@ describe('should delete comments', () => {
     expect(actual).toEqual(expected);
   });
 });
+
+describe('should edit comments', () => {
+  it('should edit an existing comment', () => {
+    const action = {
+      type: 'EDIT_COMMENT',
+      body: 'I can edit the comments.',
+      id: '8tu4bsun805n8un48ve89'
+    };
+
+    const expected = {
+      '8tu4bsun805n8un48ve89': {
+        id: '8tu4bsun805n8un48ve89',
+        parentId: '8xf0y6ziyjabvozdd253nd',
+        timestamp: 1469479767190,
+        body: 'I can edit the comments.',
+        author: 'thingone',
+        voteScore: -5,
+        deleted: false,
+        parentDeleted: false
+      }
+    };
+
+    const actual = comment(stateBefore(), action);
+    expect(actual).toEqual(expected);
+  });
+
+  it('should not modify state with an invalid id', () => {
+    const action = {
+      type: 'EDIT_COMMENT',
+      body: 'I should not be able to edit this comment.',
+      id: 'invalid-id'
+    };
+
+    const expected = {
+      '8tu4bsun805n8un48ve89': {
+        id: '8tu4bsun805n8un48ve89',
+        parentId: '8xf0y6ziyjabvozdd253nd',
+        timestamp: 1469479767190,
+        body: 'Comments. Are. Cool.',
+        author: 'thingone',
+        voteScore: -5,
+        deleted: false,
+        parentDeleted: false
+      }
+    };
+
+    const actual = comment(stateBefore(), action);
+    expect(actual).toEqual(expected);
+  });
+});

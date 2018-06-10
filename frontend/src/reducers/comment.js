@@ -24,6 +24,16 @@ function comment(state = initialCommentState, action) {
       } else {
         return state;
       }
+    case EDIT_COMMENT:
+      if (action.id in state) {
+        return {
+          ...state,
+          [action.id]: {
+            ...state[action.id],
+            body: action.body
+          }
+        };
+      }
     default:
       return state;
   }
