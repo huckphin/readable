@@ -103,4 +103,26 @@ describe('should edit posts', () => {
     const actual = post(stateBefore(), action);
     expect(actual).toEqual(expected);
   });
+
+  it('should not modify the state when given an invalid post-id', () => {
+    const action = {
+      type: 'EDIT_POST',
+      id: 'invalid-id',
+      body: 'I cannot modify the state.'
+    };
+
+    const actual = post(stateBefore(), action);
+    expect(actual).toEqual(stateBefore());
+  });
+
+  it('should not modify the state when given an empty state', () => {
+    const action = {
+      type: 'EDIT_POST',
+      id: 'invalid-id',
+      body: 'No such post.'
+    };
+
+    const actual = post(stateBefore(), action);
+    expect(actual).toEqual(stateBefore());
+  });
 });
