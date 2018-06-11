@@ -88,3 +88,19 @@ describe('should delete posts', () => {
     expect(actual).toEqual({});
   });
 });
+
+describe('should edit posts', () => {
+  it('should edit a post', () => {
+    const action = {
+      type: 'EDIT_POST',
+      id: '6ni6ok3ym7mf1p33lnez',
+      body: 'I can edit posts.'
+    };
+
+    let expected = stateBefore();
+    expected['6ni6ok3ym7mf1p33lnez']['body'] = 'I can edit posts.';
+
+    const actual = post(stateBefore(), action);
+    expect(actual).toEqual(expected);
+  });
+});
